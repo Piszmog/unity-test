@@ -1,85 +1,89 @@
-﻿using UnityEngine;
+﻿using Enemy;
+using UnityEngine;
 
-public class PlayerShooting : MonoBehaviour
+namespace Player
 {
-    public int damagePerShot = 20;
-    public float timeBetweenBullets = 0.15f;
-    public float range = 100f;
-
-
-    float timer;
-    Ray shootRay = new Ray();
-    RaycastHit shootHit;
-    int shootableMask;
-    ParticleSystem gunParticles;
-    LineRenderer gunLine;
-    AudioSource gunAudio;
-    Light gunLight;
-    float effectsDisplayTime = 0.2f;
-
-
-    void Awake ()
+    public class PlayerShooting : MonoBehaviour
     {
-        shootableMask = LayerMask.GetMask ("Shootable");
-        gunParticles = GetComponent<ParticleSystem> ();
-        gunLine = GetComponent <LineRenderer> ();
-        gunAudio = GetComponent<AudioSource> ();
-        gunLight = GetComponent<Light> ();
-    }
+        public int damagePerShot = 20;
+        public float timeBetweenBullets = 0.15f;
+        public float range = 100f;
 
 
-    void Update ()
-    {
-        timer += Time.deltaTime;
+        float timer;
+        Ray shootRay = new Ray();
+        RaycastHit shootHit;
+        int shootableMask;
+        ParticleSystem gunParticles;
+        LineRenderer gunLine;
+        AudioSource gunAudio;
+        Light gunLight;
+        float effectsDisplayTime = 0.2f;
 
-		if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
+
+        void Awake ()
         {
-            Shoot ();
+            shootableMask = LayerMask.GetMask ("Shootable");
+            gunParticles = GetComponent<ParticleSystem> ();
+            gunLine = GetComponent <LineRenderer> ();
+            gunAudio = GetComponent<AudioSource> ();
+            gunLight = GetComponent<Light> ();
         }
 
-        if(timer >= timeBetweenBullets * effectsDisplayTime)
+
+        void Update ()
         {
-            DisableEffects ();
-        }
-    }
+            timer += Time.deltaTime;
 
-
-    public void DisableEffects ()
-    {
-        gunLine.enabled = false;
-        gunLight.enabled = false;
-    }
-
-
-    void Shoot ()
-    {
-        timer = 0f;
-
-        gunAudio.Play ();
-
-        gunLight.enabled = true;
-
-        gunParticles.Stop ();
-        gunParticles.Play ();
-
-        gunLine.enabled = true;
-        gunLine.SetPosition (0, transform.position);
-
-        shootRay.origin = transform.position;
-        shootRay.direction = transform.forward;
-
-        if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
-        {
-            EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
-            if(enemyHealth != null)
+            if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets && Time.timeScale != 0)
             {
-                enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                Shoot ();
             }
-            gunLine.SetPosition (1, shootHit.point);
+
+            if(timer >= timeBetweenBullets * effectsDisplayTime)
+            {
+                DisableEffects ();
+            }
         }
-        else
+
+
+        public void DisableEffects ()
         {
-            gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
+            gunLine.enabled = false;
+            gunLight.enabled = false;
+        }
+
+
+        void Shoot ()
+        {
+            timer = 0f;
+
+            gunAudio.Play ();
+
+            gunLight.enabled = true;
+
+            gunParticles.Stop ();
+            gunParticles.Play ();
+
+            gunLine.enabled = true;
+            gunLine.SetPosition (0, transform.position);
+
+            shootRay.origin = transform.position;
+            shootRay.direction = transform.forward;
+
+            if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
+            {
+                EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
+                if(enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                }
+                gunLine.SetPosition (1, shootHit.point);
+            }
+            else
+            {
+                gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
+            }
         }
     }
 }

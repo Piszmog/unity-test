@@ -1,28 +1,32 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+namespace Managers
 {
-    public PlayerHealth playerHealth;
-    public GameObject enemy;
-    public float spawnTime = 3f;
-    public Transform[] spawnPoints;
-
-
-    void Start ()
+    public class EnemyManager : MonoBehaviour
     {
-        InvokeRepeating ("Spawn", spawnTime, spawnTime);
-    }
+        public PlayerHealth playerHealth;
+        public GameObject enemy;
+        public float spawnTime = 3f;
+        public Transform[] spawnPoints;
 
 
-    void Spawn ()
-    {
-        if(playerHealth.currentHealth <= 0f)
+        void Start ()
         {
-            return;
+            InvokeRepeating ("Spawn", spawnTime, spawnTime);
         }
 
-        int spawnPointIndex = Random.Range (0, spawnPoints.Length);
 
-        Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        void Spawn ()
+        {
+            if(playerHealth.currentHealth <= 0f)
+            {
+                return;
+            }
+
+            int spawnPointIndex = Random.Range (0, spawnPoints.Length);
+
+            Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        }
     }
 }

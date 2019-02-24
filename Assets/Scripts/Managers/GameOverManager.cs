@@ -1,24 +1,28 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 
-public class GameOverManager : MonoBehaviour
+namespace Managers
 {
-    public PlayerHealth playerHealth;
-
-
-    Animator anim;
-
-
-    void Awake()
+    public class GameOverManager : MonoBehaviour
     {
-        anim = GetComponent<Animator>();
-    }
+        public PlayerHealth playerHealth;
 
 
-    void Update()
-    {
-        if (playerHealth.currentHealth <= 0)
+        Animator anim;
+
+
+        void Awake()
         {
-            anim.SetTrigger("GameOver");
+            anim = GetComponent<Animator>();
+        }
+
+
+        void Update()
+        {
+            if (playerHealth.currentHealth <= 0)
+            {
+                anim.SetTrigger("GameOver");
+            }
         }
     }
 }

@@ -1,24 +1,26 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-public class ScoreManager : MonoBehaviour
+namespace Managers
 {
-    public static int score;
-
-
-    Text text;
-
-
-    void Awake ()
+    public class ScoreManager : MonoBehaviour
     {
-        text = GetComponent <Text> ();
-        score = 0;
-    }
+        public static int score;
 
 
-    void Update ()
-    {
-        text.text = "Score: " + score;
+        Text text;
+
+
+        void Awake ()
+        {
+            text = GetComponent <Text> ();
+            score = 0;
+        }
+
+
+        void Update ()
+        {
+            text.text = "Score: " + score;
+        }
     }
 }

@@ -1,80 +1,83 @@
 ﻿using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour
+namespace Enemy
 {
-    public int startingHealth = 100;
-    public int currentHealth;
-    public float sinkSpeed = 2.5f;
-    public int scoreValue = 10;
-    public AudioClip deathClip;
-
-
-    Animator anim;
-    AudioSource enemyAudio;
-    ParticleSystem hitParticles;
-    CapsuleCollider capsuleCollider;
-    bool isDead;
-    bool isSinking;
-
-
-    void Awake ()
+    public class EnemyHealth : MonoBehaviour
     {
-        anim = GetComponent <Animator> ();
-        enemyAudio = GetComponent <AudioSource> ();
-        hitParticles = GetComponentInChildren <ParticleSystem> ();
-        capsuleCollider = GetComponent <CapsuleCollider> ();
-
-        currentHealth = startingHealth;
-    }
+        public int startingHealth = 100;
+        public int currentHealth;
+        public float sinkSpeed = 2.5f;
+        public int scoreValue = 10;
+        public AudioClip deathClip;
 
 
-    void Update ()
-    {
-        if(isSinking)
+        Animator anim;
+        AudioSource enemyAudio;
+        ParticleSystem hitParticles;
+        CapsuleCollider capsuleCollider;
+        bool isDead;
+        bool isSinking;
+
+
+        void Awake ()
         {
-            transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
+            anim = GetComponent <Animator> ();
+            enemyAudio = GetComponent <AudioSource> ();
+            hitParticles = GetComponentInChildren <ParticleSystem> ();
+            capsuleCollider = GetComponent <CapsuleCollider> ();
+
+            currentHealth = startingHealth;
         }
-    }
 
 
-    public void TakeDamage (int amount, Vector3 hitPoint)
-    {
-        if(isDead)
-            return;
+        void Update ()
+        {
+            if(isSinking)
+            {
+                transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
+            }
+        }
 
-        enemyAudio.Play ();
 
-        currentHealth -= amount;
+        public void TakeDamage (int amount, Vector3 hitPoint)
+        {
+            if(isDead)
+                return;
+
+            enemyAudio.Play ();
+
+            currentHealth -= amount;
             
-        hitParticles.transform.position = hitPoint;
-        hitParticles.Play();
+            hitParticles.transform.position = hitPoint;
+            hitParticles.Play();
 
-        if(currentHealth <= 0)
-        {
-            Death ();
+            if(currentHealth <= 0)
+            {
+                Death ();
+            }
         }
-    }
 
 
-    void Death ()
-    {
-        isDead = true;
+        void Death ()
+        {
+            isDead = true;
 
-        capsuleCollider.isTrigger = true;
+            capsuleCollider.isTrigger = true;
 
-        anim.SetTrigger ("Dead");
+            anim.SetTrigger ("Dead");
 
-        enemyAudio.clip = deathClip;
-        enemyAudio.Play ();
-    }
+            enemyAudio.clip = deathClip;
+            enemyAudio.Play ();
+        }
 
 
-    public void StartSinking ()
-    {
-        GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false;
-        GetComponent <Rigidbody> ().isKinematic = true;
-        isSinking = true;
-        //ScoreManager.score += scoreValue;
-        Destroy (gameObject, 2f);
+        public void StartSinking ()
+        {
+            GetComponent <UnityEngine.AI.NavMeshAgent> ().enabled = false;
+            GetComponent <Rigidbody> ().isKinematic = true;
+            isSinking = true;
+            //ScoreManager.score += scoreValue;
+            Destroy (gameObject, 2f);
+        }
     }
 }
