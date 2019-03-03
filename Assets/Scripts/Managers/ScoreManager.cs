@@ -5,22 +5,18 @@ namespace Managers
 {
     public class ScoreManager : MonoBehaviour
     {
-        public static int score;
+        private static int _score;
+        private Text text;
 
-
-        Text text;
-
-
-        void Awake ()
+        private void Awake()
         {
-            text = GetComponent <Text> ();
-            score = 0;
+            text = GetComponent<Text>();
+            _score = 0;
         }
 
-
-        void Update ()
+        private void Update()
         {
-            text.text = "Score: " + score;
+            text.text = "Score: " + _score;
         }
     }
 }

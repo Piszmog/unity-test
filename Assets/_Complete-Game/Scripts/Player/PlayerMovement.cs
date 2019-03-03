@@ -63,7 +63,7 @@ namespace CompleteProject
         {
 #if !MOBILE_INPUT
             // Create a ray from the mouse cursor on screen in the direction of the camera.
-            Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
+            Ray camRay = UnityEngine.Camera.main.ScreenPointToRay (Input.mousePosition);
 
             // Create a RaycastHit variable to store information about what was hit by the ray.
             RaycastHit floorHit;

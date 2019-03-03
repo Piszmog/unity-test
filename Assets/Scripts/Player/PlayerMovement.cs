@@ -53,7 +53,7 @@ namespace Player
         private void Turning()
         {
             // Create a ray from the mouse cursor on screen in the direction of the camera.
-            var camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var camRay = UnityEngine.Camera.main.ScreenPointToRay(Input.mousePosition);
             // Perform the raycast and if it hits something on the floor layer...
             // Create a RaycastHit variable to store information about what was hit by the ray.
             if (!Physics.Raycast(camRay, out var floorHit, CamRayLength, floorMask))

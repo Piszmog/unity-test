@@ -4,26 +4,25 @@ namespace Enemy
 {
     public class EnemyMovement : MonoBehaviour
     {
-        Transform player;
         //PlayerHealth playerHealth;
         //EnemyHealth enemyHealth;
-        UnityEngine.AI.NavMeshAgent nav;
+        private Transform player;
+        private UnityEngine.AI.NavMeshAgent navigation;
 
 
-        void Awake ()
+        private void Awake()
         {
-            player = GameObject.FindGameObjectWithTag ("Player").transform;
+            player = GameObject.FindGameObjectWithTag("Player").transform;
             //playerHealth = player.GetComponent <PlayerHealth> ();
             //enemyHealth = GetComponent <EnemyHealth> ();
-            nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+            navigation = GetComponent<UnityEngine.AI.NavMeshAgent>();
         }
 
-
-        void Update ()
+        private void Update()
         {
             //if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
             //{
-            nav.SetDestination (player.position);
+            navigation.SetDestination(player.position);
             //}
             //else
             //{

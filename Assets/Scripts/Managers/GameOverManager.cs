@@ -5,23 +5,22 @@ namespace Managers
 {
     public class GameOverManager : MonoBehaviour
     {
+        private static readonly int GameOver = Animator.StringToHash("GameOver");
+
         public PlayerHealth playerHealth;
 
+        private Animator anim;
 
-        Animator anim;
-
-
-        void Awake()
+        private void Awake()
         {
             anim = GetComponent<Animator>();
         }
 
-
-        void Update()
+        private void Update()
         {
             if (playerHealth.currentHealth <= 0)
             {
-                anim.SetTrigger("GameOver");
+                anim.SetTrigger(GameOver);
             }
         }
     }

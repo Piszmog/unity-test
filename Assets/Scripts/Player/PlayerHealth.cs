@@ -6,6 +6,8 @@ namespace Player
 {
     public class PlayerHealth : MonoBehaviour
     {
+        private static readonly int Die = Animator.StringToHash("Die");
+
         public int startingHealth = 100;
         public int currentHealth;
         public Slider healthSlider;
@@ -14,75 +16,59 @@ namespace Player
         public float flashSpeed = 5f;
         public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 
+        private Animator animator;
+        private AudioSource playerAudio;
+        private PlayerMovement playerMovement;
+        private bool isDead;
+        private bool isDamaged;
 
-        Animator anim;
-        AudioSource playerAudio;
-        PlayerMovement playerMovement;
         //PlayerShooting playerShooting;
-        bool isDead;
-        bool damaged;
 
-
-        void Awake ()
+        private void Awake()
         {
-            anim = GetComponent <Animator> ();
-            playerAudio = GetComponent <AudioSource> ();
-            playerMovement = GetComponent <PlayerMovement> ();
+            animator = GetComponent<Animator>();
+            playerAudio = GetComponent<AudioSource>();
+            playerMovement = GetComponent<PlayerMovement>();
             //playerShooting = GetComponentInChildren <PlayerShooting> ();
             currentHealth = startingHealth;
         }
 
-
-        void Update ()
+        private void Update()
         {
-            if(damaged)
-            {
-                damageImage.color = flashColour;
-            }
-            else
-            {
-                damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-            }
-            damaged = false;
+            damageImage.color = isDamaged
+                ? flashColour
+                : Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+
+            isDamaged = false;
         }
 
-
-        public void TakeDamage (int amount)
+        public void TakeDamage(int amount)
         {
-            damaged = true;
-
+            isDamaged = true;
             currentHealth -= amount;
-
             healthSlider.value = currentHealth;
+            playerAudio.Play();
 
-            playerAudio.Play ();
-
-            if(currentHealth <= 0 && !isDead)
+            if (currentHealth <= 0 && !isDead)
             {
-                Death ();
+                Death();
             }
         }
 
-
-        void Death ()
+        private void Death()
         {
             isDead = true;
-
             //playerShooting.DisableEffects ();
-
-            anim.SetTrigger ("Die");
-
+            animator.SetTrigger(Die);
             playerAudio.clip = deathClip;
-            playerAudio.Play ();
-
+            playerAudio.Play();
             playerMovement.enabled = false;
             //playerShooting.enabled = false;
         }
 
-
-        public void RestartLevel ()
+        public void RestartLevel()
         {
-            SceneManager.LoadScene (0);
+            SceneManager.LoadScene(0);
         }
     }
 }
