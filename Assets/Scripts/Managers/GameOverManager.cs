@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Managers
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Class the manages the game over animation..
+    /// </summary>
     public class GameOverManager : MonoBehaviour
     {
         private static readonly int GameOver = Animator.StringToHash("GameOver");

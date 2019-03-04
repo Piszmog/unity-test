@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Managers
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Class the manages the enemies.
+    /// </summary>
     public class EnemyManager : MonoBehaviour
     {
         public PlayerHealth playerHealth;
@@ -10,12 +14,10 @@ namespace Managers
         public float spawnTime = 3f;
         public Transform[] spawnPoints;
 
-
         private void Start()
         {
-            InvokeRepeating("Spawn", spawnTime, spawnTime);
+            InvokeRepeating(nameof(Spawn), spawnTime, spawnTime);
         }
-
 
         private void Spawn()
         {
@@ -25,7 +27,6 @@ namespace Managers
             }
 
             var spawnPointIndex = Random.Range(0, spawnPoints.Length);
-
             Instantiate(enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
         }
     }

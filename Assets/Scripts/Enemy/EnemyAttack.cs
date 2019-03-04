@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Enemy
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Class to control the enemy's attach behavior.
+    /// </summary>
     public class EnemyAttack : MonoBehaviour
     {
         private static readonly int PlayerDead = Animator.StringToHash("PlayerDead");
@@ -14,15 +18,14 @@ namespace Enemy
         private GameObject player;
         private PlayerHealth playerHealth;
         private bool isPlayerInRange;
-
         private float timer;
-        //EnemyHealth enemyHealth;
+        private EnemyHealth enemyHealth;
 
         private void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
             playerHealth = player.GetComponent<PlayerHealth>();
-            //enemyHealth = GetComponent<EnemyHealth>();
+            enemyHealth = GetComponent<EnemyHealth>();
             animator = GetComponent<Animator>();
         }
 
@@ -45,7 +48,7 @@ namespace Enemy
         private void Update()
         {
             timer += Time.deltaTime;
-            if (timer >= timeBetweenAttacks && isPlayerInRange /* && enemyHealth.currentHealth > 0*/)
+            if (timer >= timeBetweenAttacks && isPlayerInRange && enemyHealth.currentHealth > 0)
             {
                 Attack();
             }

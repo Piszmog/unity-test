@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Class that controls the players movement. 
+    /// </summary>
     public class PlayerMovement : MonoBehaviour
     {
         private static readonly int IsWalking = Animator.StringToHash("IsWalking");

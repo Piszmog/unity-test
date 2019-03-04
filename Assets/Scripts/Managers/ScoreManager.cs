@@ -3,6 +3,10 @@ using UnityEngine.UI;
 
 namespace Managers
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Class the manages the user's score.
+    /// </summary>
     public class ScoreManager : MonoBehaviour
     {
         private static int _score;
