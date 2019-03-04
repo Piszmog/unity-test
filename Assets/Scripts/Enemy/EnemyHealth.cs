@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
@@ -69,10 +71,10 @@ namespace Enemy
 
         public void StartSinking()
         {
-            GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
             isSinking = true;
-            //ScoreManager.score += scoreValue;
+            ScoreManager.IncreaseScore(scoreValue);
             Destroy(gameObject, 2f);
         }
     }

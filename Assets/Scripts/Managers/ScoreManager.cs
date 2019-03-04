@@ -12,6 +12,15 @@ namespace Managers
         private static int _score;
         private Text text;
 
+        /// <summary>
+        /// Increments the user's score.
+        /// </summary>
+        /// <param name="amount">The amount to increase the score by.</param>
+        public static void IncreaseScore(int amount)
+        {
+            _score += amount;
+        }
+
         private void Awake()
         {
             text = GetComponent<Text>();
