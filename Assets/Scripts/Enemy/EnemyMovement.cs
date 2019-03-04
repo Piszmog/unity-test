@@ -4,6 +4,7 @@ using UnityEngine.AI;
 
 namespace Enemy
 {
+    /// <inheritdoc />
     /// <summary>
     /// Class the controls the enemy's movement. An enemy will navigate to the player. If the player dies,
     /// the enemy will stop navigating to the player.
